@@ -1,2 +1,6 @@
+import os
+from bbuild.app import app
+
 def run():
-    print("HELLO WORLD")
+    os.environ['FLASK_ENV'] = 'development'
+    app.run('0.0.0.0', debug=True)
