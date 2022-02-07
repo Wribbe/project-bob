@@ -6,7 +6,8 @@ from pathlib import Path
 from subprocess import call as _call
 
 
-PATH_REPO = Path(__file__).parent.parent
+PATH_HERE = Path(__file__).parent
+PATH_REPO = PATH_HERE.parent
 PATH_CHECKOUT = PATH_REPO.parent / PATH_REPO.name.removesuffix('.git')
 
 
