@@ -2,6 +2,19 @@
 
 import sys
 
+from pathlib import Path
+from subprocess import call as _call
+
+
+REPO_NAME = Path(__file__).parent.parent.name
+
+
+def call(command):
+    command = command.split() if type(command) == str else command
+    print(f"Calling {command}")
+    return _call(command)
+
+
 for (_, _, ref) in [l.split() for l in sys.stdin.readlines()]:
     branch = ref.removeprefix('refs/heads/')
-    print(f"on branch: {branch}")
+    print(f"on branch: {branch} @ {REPO_NAME}")
