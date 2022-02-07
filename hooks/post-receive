@@ -2,5 +2,6 @@
 
 import sys
 
-for line in sys.stdin.readlines():
-    print(f"read: {line}")
+for (_, _, ref) in sys.stdin.readlines():
+    branch = ref.removeprefix('refs/heads/')
+    print(f"on branch: {branch}")
