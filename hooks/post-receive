@@ -6,7 +6,8 @@ from pathlib import Path
 from subprocess import call as _call
 
 
-REPO_NAME = Path(__file__).parent.parent.name
+PATH_REPO = Path(__file__).parent.parent
+PATH_CHECKOUT = PATH_REPO.parent / PATH_REPO.name.removesuffix('.git')
 
 
 def call(command):
@@ -15,6 +16,10 @@ def call(command):
     return _call(command)
 
 
-for (_, _, ref) in [l.split() for l in sys.stdin.readlines()]:
-    branch = ref.removeprefix('refs/heads/')
-    print(f"on branch: {branch} @ {REPO_NAME}")
+def main(branch):
+    print(f"on branch: {branch} @ {PATH_REPO}")
+
+
+if __name__ == "__main__":
+    _, _, ref = sys.stdin.readlines()[0].split()
+    main(ref.removeprefix('refs/heads/'))
