@@ -2,6 +2,6 @@
 
 import sys
 
-for (_, _, ref) in sys.stdin.readlines():
+for (_, _, ref) in [l.split() for l in sys.stdin.readlines()]:
     branch = ref.removeprefix('refs/heads/')
     print(f"on branch: {branch}")
