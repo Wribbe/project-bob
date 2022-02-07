@@ -17,7 +17,13 @@ def call(command):
 
 
 def main(branch):
-    print(f"on branch: {branch} @ {PATH_REPO}")
+    print(f"On branch: {branch} @ {PATH_REPO}")
+    call(f"""
+        git
+        --git-dir={PATH_REPO}
+        --work-tree={PATH_CHECKOUT}
+        checkout {branch}
+    """
 
 
 if __name__ == "__main__":
