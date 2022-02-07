@@ -23,7 +23,7 @@ def main(branch):
         --git-dir={PATH_REPO}
         --work-tree={PATH_CHECKOUT}
         checkout {branch}
-    """
+    """)
 
 
 if __name__ == "__main__":
