@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import subprocess
 
 from pathlib import Path
 from subprocess import call as _call
@@ -9,6 +10,7 @@ from subprocess import call as _call
 PATH_HERE = Path(__file__).parent
 PATH_REPO = PATH_HERE.parent
 PATH_CHECKOUT = PATH_REPO.parent / PATH_REPO.name.removesuffix('.git')
+PATH_PID = PATH_CHECKOUT / '__pid__'
 
 
 def call(command):
@@ -29,6 +31,21 @@ def main(branch):
     print(f"On branch: {branch} @ {PATH_REPO}")
 
     git(f"checkout {branch}")
+
+    os.chdir(PATH_REPO)
+
+    call('python -m venv venv')
+
+    PY = Path('venv', 'Scripts', 'python.exe')
+    call(f'{PY} -m pip install .')
+
+    proc = subprocess.Popen(
+        [PY.parent / 'bbuild.exe' ],
+        creationflags=subprocess.DETATCHED_PROCESS
+    )
+
+    PATH_PID.write_text(proc.pid)
+    print(f"Written pid: {proc.pid} to {PATH_PID}")
 
 
 if __name__ == "__main__":
