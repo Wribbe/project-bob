@@ -33,7 +33,7 @@ def main(branch):
 
     git(f"checkout {branch}")
 
-    os.chdir(PATH_REPO)
+    os.chdir(PATH_CHECKOUT)
 
     call('python -m venv venv')
 
