@@ -50,10 +50,8 @@ def main(branch):
 
     os.chdir(PATH_CHECKOUT)
 
-    if Path('venv').is_dir():
-        shutil.rmtree('venv')
-
-    call('python -m venv venv')
+    if not Path('venv').is_dir():
+        call('python -m venv venv')
 
     PY = Path('venv', 'Scripts', 'python.exe')
     call(f'{PY} -m pip install .')
