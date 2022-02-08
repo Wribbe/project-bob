@@ -33,6 +33,8 @@ def main(branch):
             os.kill(int(PATH_PID.read_text()), signal.SIGTERM)
         except OSError as e:
             print(f"No such process to kill, continuing")
+    else:
+        print(f"Couldn't find file {PATH_PID}")
 
     if not PATH_CHECKOUT.is_dir():
         PATH_CHECKOUT.mkdir()
