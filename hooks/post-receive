@@ -25,21 +25,25 @@ def git(command):
     call(f"git --git-dir={PATH_REPO} --work-tree={PATH_CHECKOUT} {command}")
 
 
+def info(*args, **kwargs):
+    print(*args, **kwargs, file=sys.stderr)
+
+
 def main(branch):
 
     if PATH_PID.is_file():
         try:
-            print(f"Trying to kill process: {PATH_PID.read_text()}")
+            info(f"Trying to kill process: {PATH_PID.read_text()}")
             os.kill(int(PATH_PID.read_text()), signal.SIGTERM)
         except OSError as e:
-            print(f"No such process to kill, continuing")
+            info(f"No such process to kill, continuing")
     else:
-        print(f"Couldn't find file {PATH_PID}")
+        info(f"Couldn't find file {PATH_PID}")
 
     if not PATH_CHECKOUT.is_dir():
         PATH_CHECKOUT.mkdir()
 
-    print(f"On branch: {branch} @ {PATH_REPO}")
+    info(f"On branch: {branch} @ {PATH_REPO}")
 
     git(f"checkout {branch}")
 
@@ -56,7 +60,7 @@ def main(branch):
     )
 
     PATH_PID.write_text(f"{proc.pid}")
-    print(f"Written pid: {proc.pid} to {PATH_PID}")
+    info(f"Written pid: {proc.pid} to {PATH_PID}")
 
 
 if __name__ == "__main__":
