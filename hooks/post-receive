@@ -46,7 +46,7 @@ def main(branch):
 
     info(f"On branch: {branch} @ {PATH_REPO}")
 
-    git(f"checkout {branch}")
+    git(f"checkout -f {branch}")
 
     os.chdir(PATH_CHECKOUT)
 
