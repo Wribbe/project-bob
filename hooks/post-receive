@@ -17,6 +17,10 @@ def call(command):
     return _call(command)
 
 
+def git(command):
+    call(f"git --git-dir={PATH_REPO} --work-tree={PATH_CHECKOUT} {command}")
+
+
 def main(branch):
 
     if not PATH_CHECKOUT.is_dir():
@@ -24,12 +28,8 @@ def main(branch):
 
     print(f"On branch: {branch} @ {PATH_REPO}")
 
-    call(f"""
-        git
-        --git-dir={PATH_REPO}
-        --work-tree={PATH_CHECKOUT}
-        checkout {branch}
-    """)
+    git(f"checkout {branch}")
+
 
 
 if __name__ == "__main__":
