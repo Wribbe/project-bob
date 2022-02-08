@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import signal
 import sys
 import subprocess
 
@@ -44,6 +45,9 @@ def main(branch):
         [PY.parent / 'bbuild.exe' ],
         creationflags=subprocess.DETACHED_PROCESS
     )
+
+    if PATH_PID.is_file():
+        os.kill(int(PATH_PID.read_text()), signal.SIGTERM)
 
     PATH_PID.write_text(f"{proc.pid}")
     print(f"Written pid: {proc.pid} to {PATH_PID}")
