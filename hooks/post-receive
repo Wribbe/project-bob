@@ -31,7 +31,6 @@ def main(branch):
     git(f"checkout {branch}")
 
 
-
 if __name__ == "__main__":
     _, _, ref = sys.stdin.readlines()[0].split()
     main(ref.removeprefix('refs/heads/'))
