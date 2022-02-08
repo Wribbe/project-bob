@@ -13,7 +13,7 @@ PATH_CHECKOUT = PATH_REPO.parent / PATH_REPO.name.removesuffix('.git')
 
 def call(command):
     command = command.split() if type(command) == str else command
-    print(f"Calling {command}")
+    print(f"Calling {' '.join(command)}")
     return _call(command)
 
 
