@@ -27,6 +27,10 @@ def git(command):
 
 def main(branch):
 
+    if PATH_PID.is_file():
+        print(f"Trying to kill process: {PATH_PID.read_text()}")
+        os.kill(int(PATH_PID.read_text()), signal.SIGTERM)
+
     if not PATH_CHECKOUT.is_dir():
         PATH_CHECKOUT.mkdir()
 
@@ -45,9 +49,6 @@ def main(branch):
         [PY.parent / 'bbuild.exe' ],
         creationflags=subprocess.DETACHED_PROCESS
     )
-
-    if PATH_PID.is_file():
-        os.kill(int(PATH_PID.read_text()), signal.SIGTERM)
 
     PATH_PID.write_text(f"{proc.pid}")
     print(f"Written pid: {proc.pid} to {PATH_PID}")
