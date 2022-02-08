@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import shutils
 import signal
 import sys
 import subprocess
@@ -48,6 +49,9 @@ def main(branch):
     git(f"checkout {branch}")
 
     os.chdir(PATH_CHECKOUT)
+
+    if Path('venv').is_dir():
+        shutils.rmtree('venv')
 
     call('python -m venv venv')
 
