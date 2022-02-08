@@ -45,7 +45,7 @@ def main(branch):
         creationflags=subprocess.DETACHED_PROCESS
     )
 
-    PATH_PID.write_text(proc.pid)
+    PATH_PID.write_text(f"{proc.pid}")
     print(f"Written pid: {proc.pid} to {PATH_PID}")
 
 
