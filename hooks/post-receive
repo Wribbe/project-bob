@@ -42,7 +42,7 @@ def main(branch):
 
     proc = subprocess.Popen(
         [PY.parent / 'bbuild.exe' ],
-        creationflags=subprocess.DETATCHED_PROCESS
+        creationflags=subprocess.DETACHED_PROCESS
     )
 
     PATH_PID.write_text(proc.pid)
