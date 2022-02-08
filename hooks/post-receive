@@ -28,8 +28,11 @@ def git(command):
 def main(branch):
 
     if PATH_PID.is_file():
-        print(f"Trying to kill process: {PATH_PID.read_text()}")
-        os.kill(int(PATH_PID.read_text()), signal.SIGTERM)
+        try:
+            print(f"Trying to kill process: {PATH_PID.read_text()}")
+            os.kill(int(PATH_PID.read_text()), signal.SIGTERM)
+        except OSError as e:
+            print(f"No such process to kill, continuing")
 
     if not PATH_CHECKOUT.is_dir():
         PATH_CHECKOUT.mkdir()
