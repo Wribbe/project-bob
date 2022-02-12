@@ -6,6 +6,11 @@ from pathlib import Path
 
 api = Blueprint('api', __name__)
 
+ROUTES = """
+    /repos/<string:name> | GET, DELETE, PATCH
+    /repos               | GET, POST
+"""
+
 
 def call(command):
     command = command.split() if type(command) == str else command
@@ -13,13 +18,39 @@ def call(command):
     return subprocess.call(command)
 
 
-@api.route('/repo', methods=['GET','POST','DELETE'])
-def repo():
+def repos(name):
 
-    if request.method == "POST":
-        return "POST RESPONSE"
+    def get():
+        return f"name: {name}"
 
-    if request.method == "DELETE":
-        return "DELETE RESPONSE"
+    def post():
+        return f"name: {name}"
 
-    return "GET RESPONSE"
+    def delete():
+        return f"name: {name}"
+
+    def patch():
+        return f"name: {name}"
+
+    return locals()[request.method.lower()]()
+
+
+_routes = {}
+for line in [l for l in ROUTES.splitlines() if l.strip()]:
+    route, methods = [t.strip() for t in line.split('|')]
+    methods = [m.strip() for m in methods.split(',')]
+    root, *rest = [t.strip() for t in route[1:].split('/')]
+    _routes.setdefault(root, {})
+    params = [r for r in rest if r.startswith('<')]
+    _routes[root][','.join(params)] = methods
+
+
+for route, route_data in _routes.items():
+    for attribute, methods in route_data.items():
+        kwargs = {'methods': methods, 'view_func': locals()[route]}
+        if not attribute:
+            kwargs['defaults'] = {
+                a[1:-1].split(':')[-1]: None for a in route_data if a.strip()
+            }
+        rule = f"/{route}/{attribute}" if attribute else f"/{route}"
+        api.add_url_rule(rule, **kwargs)
