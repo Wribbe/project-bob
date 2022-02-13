@@ -13,10 +13,6 @@ if not PATH_REPOS.is_dir():
     PATH_REPOS.mkdir()
 
 
-ROUTES = """
-    /repos/<string:name> | GET, DELETE, PATCH
-    /repos               | GET, POST
-"""
 api = Blueprint('api', __name__)
 
 
@@ -26,7 +22,9 @@ def call(command):
     return subprocess.call(command)
 
 
-def repos(name):
+@api.route('/repos', defaults={'name': None}, methods=['GET', 'POST'])
+@api.route('/repos/<string:name>', methods=['GET', 'POST', 'PATCH', 'DELETE'])
+def repos_route(name):
 
     def get():
         return f"name: {name}"
@@ -41,24 +39,3 @@ def repos(name):
         return f"name: {name}"
 
     return locals()[request.method.lower()]()
-
-
-_routes = {}
-for line in [l for l in ROUTES.splitlines() if l.strip()]:
-    route, methods = [t.strip() for t in line.split('|')]
-    methods = [m.strip() for m in methods.split(',')]
-    root, *rest = [t.strip() for t in route[1:].split('/')]
-    _routes.setdefault(root, {})
-    params = [r for r in rest if r.startswith('<')]
-    _routes[root][','.join(params)] = methods
-
-
-for route, route_data in _routes.items():
-    for attribute, methods in route_data.items():
-        kwargs = {'methods': methods, 'view_func': locals()[route]}
-        if not attribute:
-            kwargs['defaults'] = {
-                a[1:-1].split(':')[-1]: None for a in route_data if a.strip()
-            }
-        rule = f"/{route}/{attribute}" if attribute else f"/{route}"
-        api.add_url_rule(rule, **kwargs)
