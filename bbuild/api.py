@@ -1,15 +1,23 @@
+import os
 import subprocess
 
 from flask import Blueprint, request
 from pathlib import Path
 
 
-api = Blueprint('api', __name__)
+PATH_ROOT = Path(__file__).parent.parent
+PATH_REPOS = os.getenv('BBUILD_REPOS', PATH_ROOT / 'repos')
+
+
+if not PATH_REPOS.is_dir():
+    PATH_REPOS.mkdir()
+
 
 ROUTES = """
     /repos/<string:name> | GET, DELETE, PATCH
     /repos               | GET, POST
 """
+api = Blueprint('api', __name__)
 
 
 def call(command):
