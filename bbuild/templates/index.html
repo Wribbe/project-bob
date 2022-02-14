@@ -5,7 +5,7 @@
 	<body>
 		<h1>HELLO FROM TEMPLATE</h1>
 		<ul>
-		{% for message in flashed_messages %}
+		{% for message in get_flashed_messages() %}
 			<li> {{ message }} </li>
 		{% endfor %}
 		</ul>
