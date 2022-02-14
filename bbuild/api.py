@@ -1,4 +1,5 @@
 import os
+import shlex
 import subprocess
 
 from flask import Blueprint, request
@@ -17,7 +18,7 @@ api = Blueprint('api', __name__)
 
 
 def call(command):
-    command = command.split() if type(command) == str else command
+    command = shlex.split(command) if type(command) == str else command
     print(f"Calling: {' '.join(command)}")
     return subprocess.call(command)
 
