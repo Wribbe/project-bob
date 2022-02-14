@@ -34,6 +34,8 @@ def index():
         )
         if resp.status_code == 409:
             flash(f"Name {payload['name']} already exists")
+        else:
+            flash(f"Succesfully created repository: {payload['name']}")
         return redirect(url_for('index'))
 
     return render_template('index.html')
