@@ -37,16 +37,28 @@ def response(code, items=None, error=None):
 def repos_route(name):
 
     def get():
-        return f"name: {name}"
+        return response(200, items=repos_list())
 
     def post():
-        return f"name: {name}"
+        payload = request.json
+
+        if not payload or 'name' not in payload:
+            return response(400, error="Missing required 'name' field.")
+
+        try:
+            return response(200, repos_create(payload['name']))
+        except OSError as e:
+            return response(409, error=str(e))
 
     def delete():
-        return f"name: {name}"
+        try:
+            repos_remove(name)
+            return response(200)
+        except OSError as e:
+            return response(409, error=str(e))
 
     def patch():
-        return f"name: {name}"
+        pass
 
     return locals()[request.method.lower()]()
 
