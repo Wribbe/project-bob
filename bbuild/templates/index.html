@@ -4,6 +4,11 @@
 	</head>
 	<body>
 		<h1>HELLO FROM TEMPLATE</h1>
+		<ul>
+		{% for message in flashed_messages %}
+			<li> {{ message }} </li>
+		{% endfor %}
+		</ul>
 		<form id="repo_create" action="{{ url_for('index') }}" method="post">
 			<label for="name">Repo name:</label>
 			<input type="text" id="name" name="name" required />
