@@ -1,5 +1,6 @@
 import os
 import shlex
+import shutil
 import subprocess
 
 from flask import Blueprint, request
@@ -24,7 +25,7 @@ def call(command):
 
 
 @api.route('/repos', defaults={'name': None}, methods=['GET', 'POST'])
-@api.route('/repos/<string:name>', methods=['GET', 'POST', 'PATCH', 'DELETE'])
+@api.route('/repos/<string:name>', methods=['PATCH', 'DELETE'])
 def repos_route(name):
 
     def get():
