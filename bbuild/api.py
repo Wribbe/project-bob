@@ -3,7 +3,7 @@ import shlex
 import shutil
 import subprocess
 
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from pathlib import Path
 
 
@@ -22,6 +22,14 @@ def call(command):
     command = shlex.split(command) if type(command) == str else command
     print(f"Calling: {' '.join(command)}")
     return subprocess.call(command)
+
+
+def response(code, items=None, error=None):
+    return jsonify({
+        'items': items,
+        'status-code': code,
+        'error': error,
+    }), code
 
 
 @api.route('/repos', defaults={'name': None}, methods=['GET', 'POST'])
