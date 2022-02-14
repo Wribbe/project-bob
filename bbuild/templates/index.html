@@ -4,6 +4,10 @@
 	</head>
 	<body>
 		<h1>HELLO FROM TEMPLATE</h1>
-		<p> Hello from sub paragraph </p>
+		<form id="repo_create" action="{{ url_for('index') }}" method="post">
+			<label for="name">Repo name:</label>
+			<input type="text" id="name" name="name" required />
+		</form>
+		<button form="repo_create">Create</button>
 	</body>
 </html>
