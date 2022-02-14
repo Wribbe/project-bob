@@ -41,3 +41,24 @@ def repos_route(name):
         return f"name: {name}"
 
     return locals()[request.method.lower()]()
+
+
+def repos_list():
+    return [p.name for p in PATH_REPOS.iterdir() if p.is_dir()]
+
+
+def repos_create(name):
+    name = Path(name).name
+    to_init = PATH_REPOS / name
+    if to_init.is_dir():
+        raise OSError(f"Repository name already taken: {name}")
+    call(f"git init --bare --shared {to_init}")
+    call(f"git --git-dir={to_init} config receive.denyNonFastForwards false")
+
+
+def repos_remove(name):
+    name = Path(name).name
+    path_to_remove = PATH_REPOS / name
+    if not path_to_remove.is_dir():
+        raise OSError(f"Repository does not exist: {name}")
+    shutil.rmtree(path_to_remove)
