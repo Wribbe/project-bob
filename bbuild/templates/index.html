@@ -9,7 +9,7 @@
 			<form id="{{ id }}" action="{{ url_for('confirm') }}" method="POST" hidden >
 				<input type="text" name="action" value="{{ url_for('index') }}" readonly />
 				<input type="text" name="method" value="DELETE" readonly />
-				<input type="text" name="name" value="{{ repo_name }}" readonly />
+				<input type="text" name="target" value="{{ repo_name }}" readonly />
 			</form>
 			<button form="{{ id }}">DEL</button>
 		</li>
@@ -17,7 +17,7 @@
 	</ul>
 	<form id="repo_create" action="{{ url_for('index') }}" method="POST">
 		<label for="name">Repo name:</label>
-		<input type="text" id="name" name="name" required />
+		<input type="text" id="name" name="target" required />
 	</form>
 	<button form="repo_create">Create</button>
 {% endblock %}
