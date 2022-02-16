@@ -34,7 +34,7 @@ def response(code, items=None, error=None):
 
 @api.route('/repos', defaults={'name': None}, methods=['GET', 'POST'])
 @api.route('/repos/<string:name>', methods=['PATCH', 'DELETE'])
-def repos_route(name):
+def repos(name):
 
     def get():
         return response(200, items=repos_list())

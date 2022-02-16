@@ -29,7 +29,7 @@ def index():
     if request.method == "POST":
         payload = request.form.to_dict()
         resp = requests.post(
-            url_for('api.repos_route'),
+            url_for('api.repos'),
             json=payload,
         )
         if resp.status_code == 409:
