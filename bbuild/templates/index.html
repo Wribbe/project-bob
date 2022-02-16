@@ -9,6 +9,11 @@
 			<li> {{ message }} </li>
 		{% endfor %}
 		</ul>
+		<ul>
+		{% for repo_name in repositories %}
+			<li> {{ repo_name }} </li>
+		{% endfor %}
+		</ul>
 		<form id="repo_create" action="{{ url_for('index') }}" method="post">
 			<label for="name">Repo name:</label>
 			<input type="text" id="name" name="name" required />

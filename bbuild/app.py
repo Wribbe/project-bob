@@ -41,4 +41,5 @@ def index():
             flash(f"Successfully created repository: {payload['name']}.")
         return redirect(url_for('index'))
 
-    return render_template('index.html')
+    repos = sorted(requests.get(url_for('api.repos')).json()['items'])
+    return render_template( 'index.html', repositories=repos)
