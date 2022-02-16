@@ -38,7 +38,7 @@ def index():
                 f"{payload['name']} already exists."
             )
         else:
-            flash(f"Succesfully created repository: {payload['name']}.")
+            flash(f"Successfully created repository: {payload['name']}.")
         return redirect(url_for('index'))
 
     return render_template('index.html')
