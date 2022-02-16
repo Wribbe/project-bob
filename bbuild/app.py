@@ -55,4 +55,4 @@ def index():
         return redirect(url_for('index'))
 
     repos = sorted(requests.get(url_for('api.repos')).json()['items'])
-    return render_template( 'index.html', repositories=repos)
+    return render_template('index.html', repositories=repos)
