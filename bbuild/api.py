@@ -79,6 +79,8 @@ def repos_create(name):
 def repos_remove(name):
     name = Path(name).name
     path_to_remove = PATH_REPOS / name
+    if path_to_remove.resolve().parent != PATH_REPOS:
+        raise OSError("Path resolves to invalid location, aborting.")
     if not path_to_remove.is_dir():
         raise OSError(f"Repository does not exist: {name}")
     shutil.rmtree(path_to_remove)
