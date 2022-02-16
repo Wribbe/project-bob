@@ -2,5 +2,12 @@
 <html>
 	<head>
 	</head>
-	<body>{% block body %}{% endblock %}</body>
+	<body>
+	<ul>
+	{% for message in get_flashed_messages() %}
+		<li> {{ message }} </li>
+	{% endfor %}
+	</ul>
+	{% block body %}{% endblock %}
+	</body>
 </html>

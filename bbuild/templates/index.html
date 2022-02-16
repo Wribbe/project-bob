@@ -2,11 +2,6 @@
 {% block body %}
 	<h1>HELLO FROM TEMPLATE</h1>
 	<ul>
-	{% for message in get_flashed_messages() %}
-		<li> {{ message }} </li>
-	{% endfor %}
-	</ul>
-	<ul>
 	{% for repo_name in repositories %}
 		<li>
 			{% set id = "repo_delete_"+repo_name %}
