@@ -1,31 +1,28 @@
-<!doctype html>
-<html>
-	<head>
-	</head>
-	<body>
-		<h1>HELLO FROM TEMPLATE</h1>
-		<ul>
-		{% for message in get_flashed_messages() %}
-			<li> {{ message }} </li>
-		{% endfor %}
-		</ul>
-		<ul>
-		{% for repo_name in repositories %}
-			<li>
-				{% set id = "repo_delete_"+repo_name %}
-				{{ repo_name }}
-				<form id="{{ id }}" action="{{ url_for('index') }}" method="POST" hidden >
-					<input type="text" name="method" value="DELETE" readonly />
-					<input type="text" name="name" value="{{ repo_name }}" readonly />
-				</form>
-				<button form="{{ id }}">DEL</button>
-			</li>
-		{% endfor %}
-		</ul>
-		<form id="repo_create" action="{{ url_for('index') }}" method="POST">
-			<label for="name">Repo name:</label>
-			<input type="text" id="name" name="name" required />
-		</form>
-		<button form="repo_create">Create</button>
-	</body>
-</html>
+{% extends 'base.html' %}
+{% block body %}
+	<h1>HELLO FROM TEMPLATE</h1>
+	<ul>
+	{% for message in get_flashed_messages() %}
+		<li> {{ message }} </li>
+	{% endfor %}
+	</ul>
+	<ul>
+	{% for repo_name in repositories %}
+		<li>
+			{% set id = "repo_delete_"+repo_name %}
+			{{ repo_name }}
+			<form id="{{ id }}" action="{{ url_for('confirm') }}" method="POST" hidden >
+				<input type="text" name="action" value="{{ url_for('index') }}" readonly />
+				<input type="text" name="method" value="DELETE" readonly />
+				<input type="text" name="name" value="{{ repo_name }}" readonly />
+			</form>
+			<button form="{{ id }}">DEL</button>
+		</li>
+	{% endfor %}
+	</ul>
+	<form id="repo_create" action="{{ url_for('index') }}" method="POST">
+		<label for="name">Repo name:</label>
+		<input type="text" id="name" name="name" required />
+	</form>
+	<button form="repo_create">Create</button>
+{% endblock %}
