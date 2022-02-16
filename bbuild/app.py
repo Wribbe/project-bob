@@ -28,17 +28,30 @@ def index():
 
     if request.method == "POST":
         payload = request.form.to_dict()
-        resp = requests.post(
-            url_for('api.repos'),
-            json=payload,
-        )
-        if resp.status_code == 409:
-            flash(
-                "Creation failed, repository with name "
-                f"{payload['name']} already exists."
-            )
+
+        if payload.get('method', "").upper() == "DELETE":
+            to_be_deleted = payload['name']
+            resp = requests.delete(url_for('api.repos', name=to_be_deleted))
+            if resp.status_code == 409:
+                flash(
+                    "Deletion failed, repository with name "
+                    f"{payload['name']} does not exist."
+                )
+            else:
+                flash(f"Successfully deleted repository: {payload['name']}.")
         else:
-            flash(f"Successfully created repository: {payload['name']}.")
+            resp = requests.post(
+                url_for('api.repos'),
+                json=payload,
+            )
+            if resp.status_code == 409:
+                flash(
+                    "Creation failed, repository with name "
+                    f"{payload['name']} already exists."
+                )
+            else:
+                flash(f"Successfully created repository: {payload['name']}.")
+
         return redirect(url_for('index'))
 
     repos = sorted(requests.get(url_for('api.repos')).json()['items'])
