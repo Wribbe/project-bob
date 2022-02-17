@@ -52,6 +52,10 @@ def index():
                     "Creation failed, repository with name "
                     f"{payload['target']} already exists."
                 )
+            elif not resp.ok:
+                flash(
+                    f"Couldn't create repository, unknown error: {resp.json()}"
+                )
             else:
                 flash(f"Successfully created repository: {payload['target']}.")
 
