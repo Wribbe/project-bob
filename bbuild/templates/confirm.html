@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block body %}
+	<h3> Confirm {{ payload.method | upper }} of {{ payload.target }} </h3>
+	<form id="confirm" action="{{ payload.action }}" method="POST" hidden>
+	{% for key, value in payload.items() %}
+		<input type="text" name="{{ key }}" value="{{ value }}" readonly />
+	{% endfor %}
+	</form>
+	<button form="confirm" name="response" value="yes">Confirm</button>
+	<button form="confirm" name="response" value="no">Abort</button>
+{% endblock %}

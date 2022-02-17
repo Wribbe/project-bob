@@ -63,3 +63,13 @@ def index():
 
     repos = sorted(requests.get(url_for('api.repos')).json()['items'])
     return render_template('index.html', repositories=repos)
+
+
+@app.route('/confirm', methods=["POST", "GET"])
+def confirm():
+    if request.method == "POST":
+        payload = request.form.to_dict()
+        return redirect(url_for('confirm', **payload))
+
+    payload = request.args.to_dict()
+    return render_template('confirm.html', payload=payload)
