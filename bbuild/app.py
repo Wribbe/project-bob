@@ -40,9 +40,12 @@ def index():
             else:
                 flash(f"Successfully deleted repository: {payload['target']}.")
         else:
+            data = {
+                'name': payload['target'],
+            }
             resp = requests.post(
                 url_for('api.repos'),
-                json=payload,
+                json=data,
             )
             if resp.status_code == 409:
                 flash(
