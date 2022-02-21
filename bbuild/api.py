@@ -43,9 +43,20 @@ def repos(name):
     def post():
         payload = request.json
 
+        allowed_chars = ['-']
+
         if not payload or 'name' not in payload:
             return response(400, error="Missing required 'name' field.")
 
+        temp_name = payload['name']
+        for allowed in allowed_chars:
+            temp_name = temp_name.replace(allowed, '')
+        if not temp_name.isalnum():
+            return response(
+                400,
+                error="name must only contain alpha-numerical characters in "
+                      f"combination with {allowed_chars}"
+            )
         try:
             created_path = repos_create(payload['name'])
             return response(200, info=created_path)
