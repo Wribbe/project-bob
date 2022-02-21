@@ -71,9 +71,10 @@ def repos_list():
 
 def repos_create(name):
     name = Path(name).name
-    to_init = f'"{PATH_REPOS / name}"'
+    to_init = PATH_REPOS / name
     if to_init.is_dir():
         raise OSError(f"Repository name already taken: {name}")
+    to_init = f'"{to_init}"'
     call(f"git init --bare --shared {to_init}")
     call(f"git --git-dir={to_init} config receive.denyNonFastForwards false")
     return str(to_init)
