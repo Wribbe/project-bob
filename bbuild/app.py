@@ -25,12 +25,14 @@ app.register_blueprint(api_blueprint, url_prefix="/api")
 @app.route('/', methods=["GET", "POST"])
 def index():
 
+    URL_API = url_for('api.repos', _external=True)
+
     if request.method == "POST":
         payload = request.form.to_dict()
 
         if payload.get('method', "").upper() == "DELETE":
             to_be_deleted = payload['target']
-            resp = requests.delete(url_for('api.repos', name=to_be_deleted))
+            resp = requests.delete(f"{URL_API}/{to_be_deleted}")
             if resp.status_code == 409:
                 flash(
                     "Deletion failed, repository with name "
@@ -42,10 +44,7 @@ def index():
             data = {
                 'name': payload['target'],
             }
-            resp = requests.post(
-                url_for('api.repos'),
-                json=data,
-            )
+            resp = requests.post(URL_API, json=data)
             if resp.status_code == 409:
                 flash(
                     "Creation failed, repository with name "
@@ -60,7 +59,7 @@ def index():
 
         return redirect(url_for('index'))
 
-    repos = sorted(requests.get(url_for('api.repos')).json()['items'])
+    repos = sorted(requests.get(URL_API).json()['items'])
     return render_template('index.html', repositories=repos)
 
 
