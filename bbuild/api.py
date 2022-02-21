@@ -24,11 +24,12 @@ def call(command):
     return subprocess.call(command)
 
 
-def response(code, items=None, error=None):
+def response(code, items=None, error=None, info=None):
     return jsonify({
         'items': items,
         'status-code': code,
         'error': error,
+        'info': info,
     }), code
 
 
@@ -46,7 +47,8 @@ def repos(name):
             return response(400, error="Missing required 'name' field.")
 
         try:
-            return response(200, repos_create(payload['name']))
+            created_path = repos_create(payload['name'])
+            return response(200, info=created_path)
         except OSError as e:
             return response(409, error=str(e))
 
@@ -74,6 +76,7 @@ def repos_create(name):
         raise OSError(f"Repository name already taken: {name}")
     call(f"git init --bare --shared {to_init}")
     call(f"git --git-dir={to_init} config receive.denyNonFastForwards false")
+    return str(to_init)
 
 
 def repos_remove(name):
