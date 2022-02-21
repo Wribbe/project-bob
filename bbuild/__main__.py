@@ -7,6 +7,4 @@ def run_dev():
 
 
 def run():
-    import socket
-    os.environ['SERVER_NAME'] = socket.gethostname()
     app.run('0.0.0.0')
