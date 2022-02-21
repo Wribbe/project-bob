@@ -17,10 +17,9 @@ if not PATH_SECRET.is_file():
     PATH_SECRET.write_text(secrets.token_hex())
 
 
-app = Flask(__name__, subdomain_matching=True)
-app.config['SERVER_NAME'] = os.getenv('SERVER_NAME', 'localhost:5000')
-app.register_blueprint(api_blueprint, subdomain="api")
+app = Flask(__name__)
 app.secret_key = PATH_SECRET.read_text()
+app.register_blueprint(api_blueprint, url_prefix="/api")
 
 
 @app.route('/', methods=["GET", "POST"])
