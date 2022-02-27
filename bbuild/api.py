@@ -54,7 +54,7 @@ def repos(name):
         if not temp_name.isalnum():
             return response(
                 400,
-                error="name must only contain alpha-numerical characters in "
+                error="name can contain only alpha-numerical characters in "
                       f"combination with {allowed_chars}"
             )
         try:
