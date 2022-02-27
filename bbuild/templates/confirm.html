@@ -6,6 +6,6 @@
 		<input type="text" name="{{ key }}" value="{{ value }}" readonly />
 	{% endfor %}
 	</form>
-	<button form="confirm" name="response" value="yes">Confirm</button>
-	<button form="confirm" name="response" value="no">Abort</button>
+	<button form="confirm">Confirm</button>
+	<a href="{{ payload.url_from }}"><button>Abort</button></a>
 {% endblock %}
