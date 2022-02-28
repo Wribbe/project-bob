@@ -7,7 +7,7 @@ from bbuild.api import api as api_blueprint
 from pathlib import Path
 
 PATH_ROOT = Path(__file__).parent.parent
-PATH_DATA = os.getenv('BBUILD_DATA', PATH_ROOT / 'data')
+PATH_DATA = Path(os.getenv('BBUILD_DATA', PATH_ROOT / 'data'))
 PATH_SECRET =  PATH_DATA / 'secret.txt'
 
 if not PATH_DATA.is_dir():

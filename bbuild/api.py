@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 PATH_ROOT = Path(__file__).parent.parent
-PATH_REPOS = os.getenv('BBUILD_REPOS', PATH_ROOT / 'repos')
+PATH_REPOS = Path(os.getenv('BBUILD_REPOS', PATH_ROOT / 'repos'))
 
 
 if not PATH_REPOS.is_dir():
