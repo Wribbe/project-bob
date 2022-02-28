@@ -11,7 +11,7 @@ PATH_DATA = Path(os.getenv('BBUILD_DATA', PATH_ROOT / 'data'))
 PATH_SECRET =  PATH_DATA / 'secret.txt'
 
 if not PATH_DATA.is_dir():
-    PATH_DATA.mkdir()
+    PATH_DATA.mkdir(parents=True)
 
 if not PATH_SECRET.is_file():
     PATH_SECRET.write_text(secrets.token_hex())

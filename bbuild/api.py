@@ -12,7 +12,7 @@ PATH_REPOS = Path(os.getenv('BBUILD_REPOS', PATH_ROOT / 'repos'))
 
 
 if not PATH_REPOS.is_dir():
-    PATH_REPOS.mkdir()
+    PATH_REPOS.mkdir(parents=True)
 
 
 api = Blueprint('api', __name__)
