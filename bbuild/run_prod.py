@@ -1,6 +1,6 @@
 from pathlib import Path
 
-PATH_BBUILD = Path("c:/bbuild")
+PATH_BBUILD = Path("c:/Users/builder/bbuild")
 
 import os
 os.environ['BBUILD_DATA'] = str(PATH_BBUILD)
